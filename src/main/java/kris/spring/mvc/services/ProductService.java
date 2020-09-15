@@ -1,5 +1,6 @@
 package kris.spring.mvc.services;
 
+import kris.spring.mvc.exceptions.NoSuchProductException;
 import kris.spring.mvc.models.Product;
 import kris.spring.mvc.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,9 @@ public class ProductService {
 
     public long getNextID(){
         return productRepository.getNextID();
+    }
+
+    public Product getProductByID(long id) throws NoSuchProductException {
+        return productRepository.getProductByID(id);
     }
 }

@@ -21,7 +21,7 @@
         <button class="btn btn-primary" type="submit">Find By ID</button>
     </form>
     <hr>
-    <h1><b>Products</b></h1>
+    <h1><b>Found Products</b></h1>
     <span th:if="${products.isEmpty()}">Product list is empty</span>
     <table class="table" th:if="${!products.isEmpty()}">
         <thead>
@@ -29,7 +29,6 @@
             <td>ID</td>
             <td>Title</td>
             <td>Cost</td>
-            <td>Action</td>
         </tr>
         </thead>
         <tbody>
@@ -37,12 +36,15 @@
             <td th:text="${p.id}"/>
             <td th:text="${p.title}"/>
             <td th:text="${p.cost}"/>
-            <td>
-                   <a class="btn btn-danger" th:href="@{'/delete/' + ${p.id}}">Delete</a>
-               </td>
-           </tr>
-           </tbody>
-       </table>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <hr>
+    <form method="GET" th:action="@{/prod}">
+        <button class="btn btn-primary" type="submit">Return to All</button>
+    </form>
 
 </div>
 

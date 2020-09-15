@@ -1,12 +1,11 @@
 package kris.spring.mvc.repositories;
 
+import kris.spring.mvc.exceptions.NoSuchProductException;
 import kris.spring.mvc.models.Product;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ProductRepository {
@@ -15,7 +14,7 @@ public class ProductRepository {
 
     @PostConstruct
     public void init() {
-        productList = new ArrayList<>();
+        productList = new LinkedList<>();
         nextID = 1L;
     }
 
@@ -34,5 +33,13 @@ public class ProductRepository {
 
     public long getNextID() {
         return nextID;
+    }
+
+    public Product getProductByID(long id) throws NoSuchProductException {
+        try{
+        return productList.stream().filter(a -> a.getId() == id).findFirst().get();}
+        catch (NoSuchElementException e ){
+            throw new NoSuchProductException();
+        }
     }
 }
