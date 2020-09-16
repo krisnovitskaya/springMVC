@@ -17,7 +17,6 @@ import java.util.List;
 @Controller
 public class ProductController {
     private ProductService productService;
-    private Product foundProduct;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -45,21 +44,15 @@ public class ProductController {
     }
 
     @PostMapping("/find")
-    public String findProduct(@RequestParam long id) {
-        try {
-            foundProduct = productService.getProductByID(id);
-
-        } catch (NoSuchProductException e) {
-            foundProduct = new Product(0, "Not Found Product with id = " + id, 0); //не очень красиво
-        }
-        return "redirect:/find_prod";
-    }
-
-    @GetMapping("find_prod")
-    public String showFoundProductPage(Model model) {
+    public String findProduct(@RequestParam long id, Model model) {
         List<Product> list = new ArrayList<>();
-        list.add(foundProduct);
+        try {
+            list.add(productService.getProductByID(id));
+        } catch (NoSuchProductException e) {
+            list.add(new Product(0, "Not Found Product with id = " + id, 0));
+        }
         model.addAttribute("products", list);
         return "found_product";
     }
+
 }
